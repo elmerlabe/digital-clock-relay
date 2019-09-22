@@ -1,0 +1,12 @@
+{
+  "name": "digital-clock",
+  "version": "0.0.1",
+  "description": "my first socket.io app",
+  "dependencies": {
+    "onoff": "^4.1.4",
+    "socket.io": "^2.2.0"
+  },
+  "scripts": {
+    "start": "node webserver.js"
+  }
+}

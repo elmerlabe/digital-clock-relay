@@ -1,10 +1,7 @@
-# digital-clock
-This is a syncronized digital clock using rasberry pi 2 model b. This is intended for
-our offices, production area or anywhere inside the building.
+# digital-clock-relay
+This is a syncronized digital clock using rasberry pi 2 model and relay circuit. The lights will automatically turn off during non working time. It is intended for our offices, production area or anywhere inside the building.
 
-
-
-### install nodejs
+### install nodejs in raspberry pi
 > sudo apt-get update
 
 > sudo apt-get dist-upgrade

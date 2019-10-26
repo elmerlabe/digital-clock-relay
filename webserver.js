@@ -3,8 +3,8 @@ var url = require('url');
 var fs = require('fs');
 var io = require('socket.io')(app)
 var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(3, 'out'); //use GPIO pin 4 as output
-var pushButton = new Gpio(2, 'in', 'both'); //use GPIO pin 17 as input, and 'both'
+var LED = new Gpio(3, 'out'); //use GPIO pin 3 as output
+var pushButton = new Gpio(2, 'in', 'both'); //use GPIO pin 2 as input, and 'both' button presses, and releases should be handled
 
 
 
@@ -49,6 +49,17 @@ function handler (req, res) {
             res.writeHead(200,{'Content-Type': 'text/css'});
             res.end(data);
         }); 
+  // Managing the route for the ttf font files 
+  } else if( /\.(ttf)$/.test(path) ) {
+    index = fs.readFile(__dirname+'/public'+path, 
+        function(error,data) {
+            if (error) {
+                res.writeHead(500);
+                return res.end("Error: unable to load " + path);
+            }
+            res.writeHead(200,{'Content-Type': 'font'});
+            res.end(data);
+        }); 
 
   } else {
           res.writeHead(404);
@@ -57,12 +68,6 @@ function handler (req, res) {
 
 }
 
-/*
-io.on('connection', function (socket) {
-    setInterval(function() {
-      socket.emit('datetime', {'datetime': new Date()});
-      }, 1000);
-});*/
 
 io.sockets.on('connection', function (socket) {// WebSocket Connection
   var sw_active = false;
@@ -73,28 +78,32 @@ io.sockets.on('connection', function (socket) {// WebSocket Connection
       console.error('There was an error', err); //output error message to console
       return;
     }
+    
     if (value == 0) {
       LED.writeSync(0);
       sw_active = true;
       console.log('Relay deactivated');
       
     }
+    
     else {
+     
       LED.writeSync(1);
       sw_active = false;
       console.log('Relay activated');
+    
     }
     
   });
   
   
-  // Send date object to client every 1 sec. 
+  // Send date object and switch status to client every 1 sec. 
   setInterval(function() {
   socket.emit('datetime', {'datetime': new Date()}, sw_active);
   }, 1000);
   
   // Data from client
-  socket.on('relay', function(data) { //get light switch status from client
+  socket.on('relay', function(data) { //get status from client
     
     if (data) {
       LED.writeSync(1);
@@ -107,7 +116,7 @@ io.sockets.on('connection', function (socket) {// WebSocket Connection
   });
 });
 
-process.on('SIGINT', function () { //on ctrl+c
+process.on('SIGINT', function() { //on ctrl+c
   LED.writeSync(0); // Turn LED off
   LED.unexport(); // Unexport LED GPIO to free resources
   pushButton.unexport(); // Unexport Button GPIO to free resources

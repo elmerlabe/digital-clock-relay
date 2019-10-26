@@ -41,86 +41,68 @@ function loop() {
             var b = "Breaktime";
             var w = "";
             var ot = "Pamugas Mode";
-            var ul = "Pahuway Mode";
+            var ul = "Manguli nata!";
             
             
                 switch (h) {
                     case '09': {
                         if (m >= 45) {
-                            breaktime();
-                        }
-                        break;
-                    }
-                    case 12: {
-                        if (m >= 0) {
-                            breaktime();
-                        }
-                        break;
-                    }
-                    case 15: {
-                        if (m <= 14) {
-                            breaktime();
-                        }
-                        else {
-                            workTime();
-                            break;
-                        }
-                        break;
-                    }
-                    case 16:
-                    case 17: {
-                        if (m >= 0) {
-                            overtime();
-                        }
-                        break;
-                    }
-                    case 18:
-                    case 19:
-                    case 20:
-                    case 21:
-                    case 22:
-                    case 23:
-                    case '00':
-                    case '01':
-                    case '02':
-                    case '03':
-                    case '04':
-                    case '05':
-                    case '06': {
-                        if (m >= 0) {
-                            document.getElementById("info").innerHTML = ul;
+                            document.getElementById("info").innerHTML = b;
                             breaktime = true;
                             emit_data(breaktime);
                         }
                         break;
-
                     }
-                    default: {
-                        workTime();
+
+                    case 12: {
+                        if (m >= 0) {
+                            document.getElementById("info").innerHTML = b;
+                            breaktime = true;
+                            emit_data(breaktime);
+                            
+                        }
                         break;
                     }
                     
-                                    
-                    function breaktime() {
-                        document.getElementById("info").innerHTML = b;
-                        breaktime = true;
-                        emit_data(breaktime);
+                    case 15: {
+                        if (m <= 14) {
+                            document.getElementById("info").innerHTML = b;
+                            breaktime = true;
+                            emit_data(breaktime);
+                            
+                        }
+                        else {
+                            document.getElementById("info").innerHTML = w;
+                            breaktime = false;
+                            emit_data(breaktime);
+                            break;
+                                
+                        }
+                        break;
                     }
                     
-                    function workTime() {
+                    case 16 || 17 
+
+: {
+                        if (m >= 0) {
+                            document.getElementById("info").innerHTML = ot;
+                            breaktime = false;
+                            emit_data(breaktime);
+                            
+                        }
+                        break;
+                    }
+
+                    default: {
                         document.getElementById("info").innerHTML = w;
                         breaktime = false;
                         emit_data(breaktime);
+                        break;
                     }
-                    
-                    function overtime() {
-                        document.getElementById("info").innerHTML = ot;
-                        breaktime = false;
-                        emit_data(breaktime);
-                    }
+
 
                 }
-
+            
 
         }
         

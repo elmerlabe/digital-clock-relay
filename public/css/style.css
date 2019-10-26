@@ -1,20 +1,40 @@
-/*@font-face {
+@font-face {
     font-family: 'Orbitron';
-    src: url(/public/fonts/Orbitron-Regular.ttf);
-}*/
+    src: url(/fonts/Orbitron-Regular.ttf);
+}
 
 body {
     background-color: black;
 }
 
 .timeFont {
-    margin-top: 50px;
+    margin-top: 65px;
     font-size: 13.5rem;
-    letter-spacing: 8px;
+    letter-spacing: 5px;
     color: #17D4FE;
     font-family: 'Orbitron', Calibri;
 }
 
+.blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+
+}
+
+#info {
+    font-size: 4rem;
+    font-style: italic;
+    color: #dc3545;
+
+}
+
+/*
 .marquee {
     width: 100%;
     font-size: 3.5rem;
@@ -40,3 +60,4 @@ body {
         transform: translate(-100%, 0);
     }
 }
+*/
